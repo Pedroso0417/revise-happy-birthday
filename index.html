@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>🎂 Happy Birthday Song</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: sans-serif;
+      padding-top: 100px;
+      background-color: #fffbe7;
+    }
+    h1 {
+      font-size: 3em;
+      color: #ff4081;
+    }
+    button {
+      font-size: 1.5em;
+      padding: 10px 20px;
+      background-color: #ff4081;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #e73370;
+    }
+    button:disabled {
+      background-color: #ffc1d6;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎉 Happy Birthday! 🎶</h1>
+  <button id="playButton" onclick="playHappyBirthday()">▶ Play Song</button>
+
+  <!-- Audio element for the Happy Birthday song -->
+  <audio id="birthdayAudio" src="happy-birthday.mp3"></audio>
+
+  <script>
+    function playHappyBirthday() {
+      const button = document.getElementById('playButton');
+      const audio = document.getElementById('birthdayAudio');
+
+      button.disabled = true;
+      audio.currentTime = 0;  // Start from the beginning
+      audio.play();
+
+      // Re-enable button after audio ends
+      audio.onended = () => {
+        button.disabled = false;
+      };
+    }
+  </script>
+
+</body>
+</html>
