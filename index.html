@@ -9,6 +9,7 @@
       font-family: sans-serif;
       padding-top: 100px;
       background-color: #fffbe7;
+      overflow: hidden;
     }
     h1 {
       font-size: 3em;
@@ -30,6 +31,35 @@
       background-color: #ffc1d6;
       cursor: not-allowed;
     }
+
+    /* Bubble style */
+    .bubble {
+      position: absolute;
+      font-size: 2em;
+      animation: floatUp 5s ease-in forwards;
+      white-space: nowrap;
+      opacity: 0.9;
+    }
+
+    /* Different colors for variety */
+    .bubble.text {
+      color: #ff4081;
+      font-weight: bold;
+    }
+    .bubble.heart {
+      color: red;
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-600px);
+        opacity: 0;
+      }
+    }
   </style>
 </head>
 <body>
@@ -46,13 +76,44 @@
       const audio = document.getElementById('birthdayAudio');
 
       button.disabled = true;
-      audio.currentTime = 0;  // Start from the beginning
+      audio.currentTime = 0;
       audio.play();
 
       // Re-enable button after audio ends
       audio.onended = () => {
         button.disabled = false;
       };
+
+      // After 5 seconds, start showing bubbles
+      setTimeout(() => {
+        spawnBubbles();
+      }, 5000);
+    }
+
+    function spawnBubbles() {
+      for (let i = 0; i < 20; i++) {
+        setTimeout(() => {
+          const bubble = document.createElement("span");
+          // Randomly pick between text and heart
+          if (Math.random() > 0.4) {
+            bubble.className = "bubble text";
+            bubble.textContent = "🎂 Happy Birthday 🎉";
+          } else {
+            bubble.className = "bubble heart";
+            bubble.textContent = "❤️";
+          }
+
+          // Random horizontal placement
+          bubble.style.left = Math.random() * (window.innerWidth - 100) + "px";
+          bubble.style.bottom = "0px";
+          bubble.style.fontSize = Math.random() * 20 + 20 + "px"; // varied sizes
+
+          document.body.appendChild(bubble);
+
+          // Remove after animation
+          setTimeout(() => bubble.remove(), 5000);
+        }, i * 400); // each bubble staggered
+      }
     }
   </script>
 
